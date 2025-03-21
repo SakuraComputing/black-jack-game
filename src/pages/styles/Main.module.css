@@ -1,7 +1,10 @@
-.body {
+html,
+body {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  height: 100%; /* Ensure full height */
+  width: 100%; /* Ensure full width */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
   font-family: 'Poppins', sans-serif;
 }
 
@@ -21,11 +24,42 @@
   font-weight: bolder;
 }
 
+.deck {
+  position: absolute;
+  height: 150px;
+  width: 100px;
+  border-radius: 8px;
+  top: 33%;
+  left: 50%;
+  z-index: 10;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(
+    135deg,
+    #950ac8 0%,
+    #1b1065 100%
+  ); /* Gradient from dark blue to green */
+  border: 2px solid #f0f0f0; /* Subtle border around the deck */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Adding shadow for depth */
+  background-size: 200px 200px; /* Scaling the texture */
+}
+
+.deck::before {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  right: 3px;
+  bottom: 3px;
+  border: 1px dashed #f0f0f0; /* Dashed border for extra flair */
+  border-radius: 8px;
+  pointer-events: none; /* Prevent the decoration from interfering with interactions */
+}
+
 .btn {
-  background-color: #1c1d19;
+  background: linear-gradient(135deg, #1e2a47 0%, #0f0b2d 100%);
   border: 1px solid #a1cb23;
   color: white;
-  padding: 15px 32px;
+  padding: 15px 40px;
   text-align: center;
   text-decoration: none;
   border-radius: 8px;
@@ -33,6 +67,24 @@
   font-size: 16px;
   margin: 4px 2px;
   cursor: pointer;
+  box-sizing: border-box;
+}
+
+.btnContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  width: 100%;
+}
+
+.topContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 200px;
+  width: 100%;
 }
 
 .container {
@@ -43,6 +95,7 @@
   width: calc(100% - 100px);
   border: 1px solid #a1cb23;
   border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Adding shadow for depth */
 }
 
 .header {
@@ -85,4 +138,5 @@
   justify-content: center;
   align-items: center;
   width: 100%;
+  height: 600px;
 }

@@ -9,5 +9,42 @@
   border-radius: 8px;
   margin: 16px;
   font-size: 24px;
-  background-color: #ffffff;
+  background: linear-gradient(
+    135deg,
+    #eff1f4 0%,
+    #e0e0ea 100%
+  ); /* Gradient from dark blue to green */
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); /* Adding shadow for depth */
+}
+
+/* Define keyframes for card flying animation */
+@keyframes dealCard {
+  0% {
+    transform: scale(0.5) translate(0, 0);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1) translate(50px, -200px); /* Flying towards the hands */
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translate(0, 0);
+  }
+}
+
+/* Dealer hand animation */
+#dealerHand .card {
+  animation-delay: 0.5s; /* Dealer gets cards later */
+}
+
+/* Player hand animation */
+#playerHand .card {
+  animation-delay: 1s; /* Player gets cards last */
+}
+
+.card:hover {
+  transform: scale(1.05); /* Slight zoom on hover */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
 }

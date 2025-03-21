@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-import { combinations } from '../../assets/cardDeck';
+import { combinations } from './helpers/cardDeck';
 
 import Card from './Card/Card';
 
@@ -40,12 +40,27 @@ export default function Home() {
     setDealerHand([]);
   };
 
+  const dealCards = () => {
+    reset();
+
+    // Deal 2 cards to player and dealer in one go
+    const playerCards = [getRandomCardFromDeck(), getRandomCardFromDeck()];
+    const dealerCards = [getRandomCardFromDeck(), getRandomCardFromDeck()];
+
+    setTimeout(setPlayerHand(playerCards), 500);
+    setTimeout(setDealerHand(dealerCards), 1000);
+  };
+
+  const calculateScore = () => {};
+
   return (
     <div className={styles.main}>
-      <large className={styles.title}>Black Jack</large>
-      <button className={styles.btn} onClick={reset}>
-        New Game
-      </button>
+      <div className={styles.topContainer}>
+        <large className={styles.title}>Black Jack</large>
+        <button className={styles.btn} onClick={dealCards}>
+          Deal
+        </button>
+      </div>
       <div className={styles.container}>
         <div className={styles.header}>
           <div className={styles.dealer}>
@@ -56,21 +71,36 @@ export default function Home() {
           </div>
           <div className={styles.cardContainer}>
             {dealerHand.map((card, index) => (
-              <Card key={index} rank={card.rank} suit={card.suit} />
+              <Card
+                key={index}
+                rank={card.rank}
+                suit={card.suit}
+                animationDelay={index * 0.5}
+              />
             ))}
           </div>
         </div>
 
+        <div className={styles.deck} id="deck"></div>
+
         <div className={styles.header}>
           <div className={styles.player}>
             <div className={styles.handText}>Player Hand</div>
-            <button className={styles.btn} onClick={dealCardToPlayer}>
-              Hit
-            </button>
+            <div className={styles.playerBtnContainer}>
+              <button className={styles.btn} onClick={dealCardToPlayer}>
+                Hit
+              </button>
+              <button className={styles.btn}>Stand</button>
+            </div>
           </div>
           <div className={styles.cardContainer}>
             {playerHand.map((card, index) => (
-              <Card key={index} rank={card.rank} suit={card.suit} />
+              <Card
+                key={index}
+                rank={card.rank}
+                suit={card.suit}
+                animationDelay={index * 1}
+              />
             ))}
           </div>
         </div>
