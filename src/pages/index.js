@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { combinations } from './helpers/cardDeck';
 
 import * as styles from '../pages/styles/Main.module.css';
+import * as buttonStyles from '../pages/styles/Button.module.css';
+
 import Hand from '../components/hand/hand';
 
 export default function Home() {
@@ -58,9 +60,10 @@ export default function Home() {
 
   return (
     <div className={styles.main}>
+      <div className={styles.deck} id="deck"></div>
       <div className={styles.topContainer}>
         <div className={styles.title}>Black Jack</div>
-        <button className={styles.btn} onClick={dealCards}>
+        <button className={buttonStyles.btn} onClick={dealCards}>
           Deal
         </button>
       </div>
@@ -72,7 +75,6 @@ export default function Home() {
             dealCardToDealer={dealCardToDealer}
           />
         )}
-        <div className={styles.deck} id="deck"></div>
         {playerHand.length > 0 && (
           <Hand
             hand={playerHand}

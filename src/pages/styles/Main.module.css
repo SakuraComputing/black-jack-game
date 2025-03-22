@@ -26,13 +26,11 @@ body {
 
 .container {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
   height: 800px;
-  width: calc(100% - 100px);
   border: 1px solid #a1cb23;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Adding shadow for depth */
+  width: calc(100vw - 96px);
 }
 
 .deck {
@@ -64,29 +62,6 @@ body {
   border: 1px dashed #f0f0f0; /* Dashed border for extra flair */
   border-radius: 8px;
   pointer-events: none; /* Prevent the decoration from interfering with interactions */
-}
-
-.btn {
-  background: linear-gradient(135deg, #1e2a47 0%, #0f0b2d 100%);
-  border: 1px solid #a1cb23;
-  color: white;
-  padding: 15px 40px;
-  text-align: center;
-  text-decoration: none;
-  border-radius: 8px;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-  box-sizing: border-box;
-}
-
-.btnContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100px;
-  width: 100%;
 }
 
 .topContainer {

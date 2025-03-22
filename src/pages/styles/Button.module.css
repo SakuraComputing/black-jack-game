@@ -1,0 +1,29 @@
+.btn {
+  background: linear-gradient(135deg, #1f2c4b 0%, #0f0b2d 100%);
+  border: 1px solid #a1cb23;
+  color: white;
+  padding: 15px 40px;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 8px;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.btn:hover {
+  opacity: 0.6;
+}
+
+.btnContainer {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  width: 100%;
+  transform: translate(-30%, -382%);
+}
