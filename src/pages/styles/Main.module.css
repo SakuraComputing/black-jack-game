@@ -24,6 +24,17 @@ body {
   font-weight: bolder;
 }
 
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 800px;
+  width: calc(100% - 100px);
+  border: 1px solid #a1cb23;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Adding shadow for depth */
+}
+
 .deck {
   position: absolute;
   height: 150px;
@@ -85,58 +96,4 @@ body {
   align-items: center;
   height: 200px;
   width: 100%;
-}
-
-.container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 800px;
-  width: calc(100% - 100px);
-  border: 1px solid #a1cb23;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Adding shadow for depth */
-}
-
-.header {
-  padding: 16px;
-  align-items: center;
-}
-
-.handText {
-  color: #ffffff;
-  font-size: 28px;
-  font-weight: bolder;
-}
-
-.dealer {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  height: 100px;
-  width: 400px;
-  border: 1px solid #a1cb23;
-  border-radius: 8px;
-  margin: 0 64px 32px 64px;
-}
-
-.player {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  height: 100px;
-  width: 400px;
-  border: 1px solid #a1cb23;
-  border-radius: 8px;
-  margin: 0 64px 32px 64px;
-}
-
-.cardContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 600px;
 }

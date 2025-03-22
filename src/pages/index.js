@@ -1,16 +1,16 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 import { combinations } from './helpers/cardDeck';
 
-import Card from './Card/Card';
-
 import * as styles from '../pages/styles/Main.module.css';
+import Hand from '../components/hand/hand';
 
 export default function Home() {
   const [deck, setDeck] = useState(combinations);
   const [playerHand, setPlayerHand] = useState([]);
   const [dealerHand, setDealerHand] = useState([]);
+  // const [gameOver, setGameOver] = useState(false);
 
   const getRandomCardFromDeck = () => {
     const randomIndex = Math.floor(Math.random() * deck.length);
@@ -26,6 +26,10 @@ export default function Home() {
   const dealCardToPlayer = () => {
     const card = getRandomCardFromDeck();
     setPlayerHand([...playerHand, card]);
+    // const playerValue = calculateHandValue(playerHand);
+    // if (playerValue > 21) {
+    //   setGameOver(true);
+    // }
   };
 
   // Deal card to Dealer
@@ -41,69 +45,41 @@ export default function Home() {
   };
 
   const dealCards = () => {
+    console.log('deal cards', playerHand, dealerHand);
     reset();
 
     // Deal 2 cards to player and dealer in one go
     const playerCards = [getRandomCardFromDeck(), getRandomCardFromDeck()];
     const dealerCards = [getRandomCardFromDeck(), getRandomCardFromDeck()];
 
-    setTimeout(setPlayerHand(playerCards), 500);
-    setTimeout(setDealerHand(dealerCards), 1000);
+    setPlayerHand(playerCards);
+    setDealerHand(dealerCards);
   };
-
-  const calculateScore = () => {};
 
   return (
     <div className={styles.main}>
       <div className={styles.topContainer}>
-        <large className={styles.title}>Black Jack</large>
+        <div className={styles.title}>Black Jack</div>
         <button className={styles.btn} onClick={dealCards}>
           Deal
         </button>
       </div>
       <div className={styles.container}>
-        <div className={styles.header}>
-          <div className={styles.dealer}>
-            <div className={styles.handText}>Dealer Hand</div>
-            <button className={styles.btn} onClick={dealCardToDealer}>
-              Hit
-            </button>
-          </div>
-          <div className={styles.cardContainer}>
-            {dealerHand.map((card, index) => (
-              <Card
-                key={index}
-                rank={card.rank}
-                suit={card.suit}
-                animationDelay={index * 0.5}
-              />
-            ))}
-          </div>
-        </div>
-
+        {dealerHand.length > 0 && (
+          <Hand
+            hand={dealerHand}
+            participant={'dealer'}
+            dealCardToDealer={dealCardToDealer}
+          />
+        )}
         <div className={styles.deck} id="deck"></div>
-
-        <div className={styles.header}>
-          <div className={styles.player}>
-            <div className={styles.handText}>Player Hand</div>
-            <div className={styles.playerBtnContainer}>
-              <button className={styles.btn} onClick={dealCardToPlayer}>
-                Hit
-              </button>
-              <button className={styles.btn}>Stand</button>
-            </div>
-          </div>
-          <div className={styles.cardContainer}>
-            {playerHand.map((card, index) => (
-              <Card
-                key={index}
-                rank={card.rank}
-                suit={card.suit}
-                animationDelay={index * 1}
-              />
-            ))}
-          </div>
-        </div>
+        {playerHand.length > 0 && (
+          <Hand
+            hand={playerHand}
+            participant={'player'}
+            dealCardToPlayer={dealCardToPlayer}
+          />
+        )}
       </div>
     </div>
   );
