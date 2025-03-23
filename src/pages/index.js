@@ -17,6 +17,8 @@ export default function Home() {
   const [gameOver, setGameOver] = useState(false);
   const [playerScore, setPlayerScore] = useState(0);
   const [dealerScore, setDealerScore] = useState(0);
+  const [result, setResult] = useState({ type: '', message: '' });
+  const [newGame, setNewGame] = useState(false);
 
   const getRandomCardFromDeck = () => {
     const randomIndex = Math.floor(Math.random() * deck.length);
@@ -34,9 +36,9 @@ export default function Home() {
       setPlayerScore(playerValue);
 
       if (playerValue > 21) {
-        setGameOver(true);
+        handleGameOver({ type: 'dealer', message: 'Dealer Wins' });
       } else if (playerValue === 21) {
-        setGameOver(true);
+        handleGameOver({ type: 'player', message: 'Player Wins' });
       }
     }
   }, [playerHand]);
@@ -53,6 +55,25 @@ export default function Home() {
 
   const playerStand = () => {
     setGameOver(true);
+
+    let updatedDealerHand = [...dealerHand];
+    let updatedDealerScore = dealerScore;
+
+    while (updatedDealerScore < 17) {
+      const card = getRandomCardFromDeck();
+      updatedDealerHand = [...updatedDealerHand, card];
+      updatedDealerScore = calculateHandValue(updatedDealerHand);
+    }
+
+    setDealerHand(updatedDealerHand);
+
+    if (updatedDealerScore > 21 || updatedDealerScore < playerScore) {
+      handleGameOver({ type: 'player', message: 'Player Wins' });
+    } else if (updatedDealerScore === 21 || updatedDealerScore > playerScore) {
+      handleGameOver({ type: 'dealer', message: 'Dealer Wins' });
+    } else {
+      handleGameOver({ type: 'draw', message: "It's a draw!" });
+    }
   };
 
   // Deal card to Dealer
@@ -62,9 +83,13 @@ export default function Home() {
   };
 
   const reset = () => {
+    setResult({ type: '', message: '' });
+    setDealerScore(0);
+    setPlayerScore(0);
     setDeck(combinations);
     setPlayerHand([]);
     setDealerHand([]);
+    setGameOver(false);
   };
 
   const dealCards = () => {
@@ -80,14 +105,23 @@ export default function Home() {
     setDealerScore(calculateHandValue(dealerCards));
   };
 
+  const handleGameOver = (result) => {
+    setGameOver(true);
+    setResult(result);
+    setNewGame(true);
+  };
+
   return (
     <div className={styles.main}>
       <div className={styles.deck} id="deck"></div>
+      {gameOver && <div className={styles.result}>{result.message}</div>}
       <div className={styles.topContainer}>
         <div className={styles.title}>Black Jack</div>
-        <button className={buttonStyles.btn} onClick={dealCards}>
-          Deal
-        </button>
+        {newGame && (
+          <button className={buttonStyles.btn} onClick={dealCards}>
+            Deal
+          </button>
+        )}
       </div>
       <div className={styles.container}>
         {dealerHand.length > 0 && (
@@ -105,6 +139,7 @@ export default function Home() {
             dealCardToPlayer={dealCardToPlayer}
             count={playerScore}
             playerStand={playerStand}
+            gameOver={gameOver}
           />
         )}
       </div>

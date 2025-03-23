@@ -19,35 +19,40 @@ body {
 }
 
 .title {
-  color: #222222; /* Dark gray to almost black */
-  font-size: 60px; /* Larger font for impact */
+  color: #ffffff; /* White text color for better contrast */
+  font-size: 48px; /* Smaller font for a sleek look */
   font-weight: bolder;
   text-transform: uppercase; /* Uppercase letters for a strong presence */
-  font-family: 'Orbitron', sans-serif; /* Sleek, futuristic font */
-  background: linear-gradient(
-    45deg,
-    #ff0000,
-    #ffcc00
-  ); /* Red-to-gold gradient for energy */
-  text-shadow: 0 0 10px #ffcc00, 0 0 20px #ffcc00; /* Glow effect */
-  letter-spacing: 2px; /* Extra spacing for drama */
-  padding: 10px;
-  border-radius: 10px; /* Rounded corners */
-  animation: shine 1.5s infinite alternate; /* Adding shine animation */
+  font-family: 'Orbitron', sans-serif; /* Futuristic font */
+
+  /* Smooth gradient background (purple to blue) for a cool effect */
+  background: linear-gradient(45deg, #6a1b9a, #3f51b5);
+
+  /* Text shadow to give a glowing effect */
+  text-shadow: 0 0 10px rgba(98, 0, 238, 1), 0 0 20px rgba(98, 0, 238, 0.8),
+    0 0 30px rgba(98, 0, 238, 0.6);
+
+  letter-spacing: 3px; /* Extra spacing for style */
+  padding: 12px 20px; /* Padding for a balanced look */
+  border-radius: 12px; /* Rounded corners */
+
+  /* Adding animation for shine effect */
+  animation: shine 2s ease-in-out infinite alternate;
 }
 
+/* Keyframes for shine animation */
 @keyframes shine {
   0% {
-    text-shadow: 0 0 8px #ffcc00, 0 0 15px #ffcc00, 0 0 25px #ffcc00,
-      0 0 35px #ffcc00;
+    text-shadow: 0 0 10px rgba(98, 0, 238, 0.6), 0 0 20px rgba(98, 0, 238, 0.5),
+      0 0 30px rgba(98, 0, 238, 0.4);
   }
   50% {
-    text-shadow: 0 0 20px #ffcc00, 0 0 30px #ffcc00, 0 0 40px #ffcc00,
-      0 0 50px #ffcc00;
+    text-shadow: 0 0 15px rgba(98, 0, 238, 1), 0 0 25px rgba(98, 0, 238, 0.8),
+      0 0 35px rgba(98, 0, 238, 0.7);
   }
   100% {
-    text-shadow: 0 0 8px #ffcc00, 0 0 15px #ffcc00, 0 0 25px #ffcc00,
-      0 0 35px #ffcc00;
+    text-shadow: 0 0 10px rgba(98, 0, 238, 0.6), 0 0 20px rgba(98, 0, 238, 0.5),
+      0 0 30px rgba(98, 0, 238, 0.4);
   }
 }
 
@@ -98,4 +103,41 @@ body {
   align-items: center;
   height: 400px;
   width: 100%;
+}
+
+.result {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  width: calc(100% - 96px);
+  transform: translate(-50%, -50%);
+  background-color: #831616;
+  border: 1px solid #a1cb23;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  font-size: 24px;
+  height: 48px;
+  font-weight: bolder;
+  text-align: center;
+  color: #ffffff;
+  z-index: 100;
+
+  /* Ensuring text is vertically centered */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* Adding fade-in effect */
+  opacity: 0; /* Start with invisible */
+  animation: fadeIn 1s forwards; /* Apply fade-in animation */
+}
+
+/* Keyframe animation for fade-in effect */
+@keyframes fadeIn {
+  0% {
+    opacity: 0; /* Start invisible */
+  }
+  100% {
+    opacity: 1; /* Fade in to fully visible */
+  }
 }

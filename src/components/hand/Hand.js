@@ -6,8 +6,17 @@ import Counter from '../counter/counter';
 import * as styles from '../../pages/styles/Hand.module.css';
 import * as buttonStyles from '../../pages/styles/Button.module.css';
 
-const Hand = ({ hand, participant, count, dealCardToPlayer, playerStand }) => {
+const Hand = ({
+  hand,
+  participant,
+  count,
+  dealCardToPlayer,
+  playerStand,
+  gameOver,
+}) => {
   const isPlayersHand = participant === 'player';
+
+  console.log('gameOver', gameOver);
 
   return (
     <div className={styles.handContainer}>
@@ -29,6 +38,7 @@ const Hand = ({ hand, participant, count, dealCardToPlayer, playerStand }) => {
               Stand
             </button>
           </div>
+
           <Counter count={count} />
         </div>
       )}
