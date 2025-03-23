@@ -3,46 +3,6 @@
   align-items: center;
 }
 
-.handText {
-  color: #ffffff;
-  font-size: 28px;
-  font-weight: bolder;
-  text-transform: capitalize;
-}
-
-.dealer {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  height: 100px;
-  width: 400px;
-  border: 1px solid #a1cb23;
-  border-radius: 8px;
-  margin: 0 64px 32px 64px;
-}
-
-.player {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  height: 100px;
-  width: 400px;
-  border: 1px solid #a1cb23;
-  border-radius: 8px;
-  margin: 0 64px 32px 64px;
-}
-
-.handContainer {
-  flex: 1;
-  margin: 32px;
-  width: 100%;
-  box-sizing: border-box;
-  min-width: 0;
-  flex-shrink: 1;
-}
-
 .cardContainer {
   display: flex;
   justify-content: flex-start;

@@ -117,31 +117,42 @@ export default function Home() {
       {gameOver && <div className={styles.result}>{result.message}</div>}
       <div className={styles.topContainer}>
         <div className={styles.title}>Black Jack</div>
-        {newGame && (
-          <button className={buttonStyles.btn} onClick={dealCards}>
-            Deal
-          </button>
-        )}
+
+        <button className={buttonStyles.btn} onClick={dealCards}>
+          Deal
+        </button>
       </div>
       <div className={styles.container}>
-        {dealerHand.length > 0 && (
-          <Hand
-            hand={dealerHand}
-            participant={'dealer'}
-            dealCardToDealer={dealCardToDealer}
-            count={dealerScore}
-          />
-        )}
-        {playerHand.length > 0 && (
-          <Hand
-            hand={playerHand}
-            participant={'player'}
-            dealCardToPlayer={dealCardToPlayer}
-            count={playerScore}
-            playerStand={playerStand}
-            gameOver={gameOver}
-          />
-        )}
+        <div className={styles.handContainer}>
+          <div className={styles.dealer}>
+            <div className={styles.handText}>Dealers Hand</div>
+          </div>
+
+          {dealerHand.length > 0 && (
+            <Hand
+              hand={dealerHand}
+              participant={'dealer'}
+              dealCardToDealer={dealCardToDealer}
+              count={dealerScore}
+            />
+          )}
+        </div>
+        <div className={styles.handContainer}>
+          <div className={styles.player}>
+            <div className={styles.handText}>Players Hand</div>
+          </div>
+
+          {playerHand.length > 0 && (
+            <Hand
+              hand={playerHand}
+              participant={'player'}
+              dealCardToPlayer={dealCardToPlayer}
+              count={playerScore}
+              playerStand={playerStand}
+              gameOver={gameOver}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

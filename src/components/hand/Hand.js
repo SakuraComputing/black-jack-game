@@ -19,10 +19,7 @@ const Hand = ({
   console.log('gameOver', gameOver);
 
   return (
-    <div className={styles.handContainer}>
-      <div className={isPlayersHand ? styles.player : styles.dealer}>
-        <div className={styles.handText}>{participant} Hand</div>
-      </div>
+    <>
       <div className={styles.cardContainer}>
         {hand.map((card, index) => (
           <Card key={index} rank={card.rank} suit={card.suit} />
@@ -42,7 +39,7 @@ const Hand = ({
           <Counter count={count} />
         </div>
       )}
-    </div>
+    </>
   );
 };
 
