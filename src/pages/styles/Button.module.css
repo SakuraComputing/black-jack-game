@@ -19,11 +19,9 @@
 }
 
 .btnContainer {
-  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100px;
+  height: 40px;
   width: 100%;
-  transform: translate(-30%, -382%);
 }

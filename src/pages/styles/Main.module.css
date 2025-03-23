@@ -13,20 +13,47 @@ body {
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   background-color: darkgreen;
 }
 
 .title {
-  color: rgb(13, 12, 12);
-  font-size: 50px;
+  color: #222222; /* Dark gray to almost black */
+  font-size: 60px; /* Larger font for impact */
   font-weight: bolder;
+  text-transform: uppercase; /* Uppercase letters for a strong presence */
+  font-family: 'Orbitron', sans-serif; /* Sleek, futuristic font */
+  background: linear-gradient(
+    45deg,
+    #ff0000,
+    #ffcc00
+  ); /* Red-to-gold gradient for energy */
+  text-shadow: 0 0 10px #ffcc00, 0 0 20px #ffcc00; /* Glow effect */
+  letter-spacing: 2px; /* Extra spacing for drama */
+  padding: 10px;
+  border-radius: 10px; /* Rounded corners */
+  animation: shine 1.5s infinite alternate; /* Adding shine animation */
+}
+
+@keyframes shine {
+  0% {
+    text-shadow: 0 0 8px #ffcc00, 0 0 15px #ffcc00, 0 0 25px #ffcc00,
+      0 0 35px #ffcc00;
+  }
+  50% {
+    text-shadow: 0 0 20px #ffcc00, 0 0 30px #ffcc00, 0 0 40px #ffcc00,
+      0 0 50px #ffcc00;
+  }
+  100% {
+    text-shadow: 0 0 8px #ffcc00, 0 0 15px #ffcc00, 0 0 25px #ffcc00,
+      0 0 35px #ffcc00;
+  }
 }
 
 .container {
   display: flex;
-  height: 800px;
+  height: 432px;
   border: 1px solid #a1cb23;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Adding shadow for depth */
@@ -38,10 +65,10 @@ body {
   height: 150px;
   width: 100px;
   border-radius: 8px;
-  top: 33%;
-  left: 50%;
+  top: 20%;
+  left: 25%;
   z-index: 10;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) rotate(65deg);
   background: linear-gradient(
     135deg,
     #950ac8 0%,
@@ -69,6 +96,6 @@ body {
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  height: 200px;
+  height: 400px;
   width: 100%;
 }

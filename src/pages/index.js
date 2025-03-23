@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { combinations } from './helpers/cardDeck';
 
@@ -8,11 +8,15 @@ import * as buttonStyles from '../pages/styles/Button.module.css';
 
 import Hand from '../components/hand/hand';
 
+import { calculateHandValue } from './helpers/utils';
+
 export default function Home() {
   const [deck, setDeck] = useState(combinations);
   const [playerHand, setPlayerHand] = useState([]);
   const [dealerHand, setDealerHand] = useState([]);
-  // const [gameOver, setGameOver] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
+  const [playerScore, setPlayerScore] = useState(0);
+  const [dealerScore, setDealerScore] = useState(0);
 
   const getRandomCardFromDeck = () => {
     const randomIndex = Math.floor(Math.random() * deck.length);
@@ -24,14 +28,31 @@ export default function Home() {
     return randomCard;
   };
 
+  useEffect(() => {
+    if (playerHand.length > 0) {
+      const playerValue = calculateHandValue(playerHand);
+      setPlayerScore(playerValue);
+
+      if (playerValue > 21) {
+        setGameOver(true);
+      } else if (playerValue === 21) {
+        setGameOver(true);
+      }
+    }
+  }, [playerHand]);
+
   // Deal Card to Player
   const dealCardToPlayer = () => {
+    if (gameOver) {
+      return;
+    }
+
     const card = getRandomCardFromDeck();
     setPlayerHand([...playerHand, card]);
-    // const playerValue = calculateHandValue(playerHand);
-    // if (playerValue > 21) {
-    //   setGameOver(true);
-    // }
+  };
+
+  const playerStand = () => {
+    setGameOver(true);
   };
 
   // Deal card to Dealer
@@ -47,7 +68,6 @@ export default function Home() {
   };
 
   const dealCards = () => {
-    console.log('deal cards', playerHand, dealerHand);
     reset();
 
     // Deal 2 cards to player and dealer in one go
@@ -56,6 +76,8 @@ export default function Home() {
 
     setPlayerHand(playerCards);
     setDealerHand(dealerCards);
+    setPlayerScore(calculateHandValue(playerCards));
+    setDealerScore(calculateHandValue(dealerCards));
   };
 
   return (
@@ -73,6 +95,7 @@ export default function Home() {
             hand={dealerHand}
             participant={'dealer'}
             dealCardToDealer={dealCardToDealer}
+            count={dealerScore}
           />
         )}
         {playerHand.length > 0 && (
@@ -80,6 +103,8 @@ export default function Home() {
             hand={playerHand}
             participant={'player'}
             dealCardToPlayer={dealCardToPlayer}
+            count={playerScore}
+            playerStand={playerStand}
           />
         )}
       </div>
