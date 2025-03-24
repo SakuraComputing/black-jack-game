@@ -18,7 +18,6 @@ export default function Home() {
   const [playerScore, setPlayerScore] = useState(0);
   const [dealerScore, setDealerScore] = useState(0);
   const [result, setResult] = useState({ type: '', message: '' });
-  const [newGame, setNewGame] = useState(false);
 
   const getRandomCardFromDeck = () => {
     const randomIndex = Math.floor(Math.random() * deck.length);
@@ -108,7 +107,6 @@ export default function Home() {
   const handleGameOver = (result) => {
     setGameOver(true);
     setResult(result);
-    setNewGame(true);
   };
 
   return (
@@ -124,7 +122,7 @@ export default function Home() {
       </div>
       <div className={styles.container}>
         <div className={styles.handContainer}>
-          <div className={styles.dealer}>
+          <div className={styles.handHeader}>
             <div className={styles.handText}>Dealers Hand</div>
           </div>
 
@@ -138,7 +136,7 @@ export default function Home() {
           )}
         </div>
         <div className={styles.handContainer}>
-          <div className={styles.player}>
+          <div className={styles.handHeader}>
             <div className={styles.handText}>Players Hand</div>
           </div>
 
