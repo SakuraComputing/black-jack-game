@@ -1,0 +1,50 @@
+.result {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  width: calc(100% - 50%);
+  transform: translate(-50%, -50%);
+  border: 1px solid #e9e991;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  font-size: 24px;
+  height: 48px;
+  font-weight: bolder;
+  text-align: center;
+  color: #ffffff;
+  z-index: 100;
+
+  /* Ensuring text is vertically centered */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* Adding fade-in effect */
+  opacity: 0; /* Start with invisible */
+  animation: fadeIn 2s forwards; /* Apply fade-in animation */
+}
+
+/* Player wins (Green) */
+.playerWin {
+  background-color: #1f7a1f;
+}
+
+/* Dealer wins (Red) */
+.dealerWin {
+  background-color: #831616;
+}
+
+/* Draw (Blue) */
+.draw {
+  background-color: #164a83;
+}
+
+/* Keyframe animation for fade-in effect */
+@keyframes fadeIn {
+  0% {
+    opacity: 0; /* Start invisible */
+  }
+  100% {
+    opacity: 1; /* Fade in to fully visible */
+  }
+}
