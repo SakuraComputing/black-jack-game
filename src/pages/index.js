@@ -105,16 +105,14 @@ export default function Home() {
   };
 
   const handleGameOver = (result) => {
-    console.log('handleGameOver', result);
     setGameOver(true);
     setResult(result);
-    console.log('gameOver', gameOver);
-    console.log('result', result);
   };
 
   return (
     <div className={styles.main}>
       <div className={styles.deck} id="deck"></div>
+
       {gameOver && <Result result={result} />}
       <div className={styles.topContainer}>
         <div className={styles.title}>Black Jack</div>
