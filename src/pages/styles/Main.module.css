@@ -107,9 +107,9 @@ body {
 
 .result {
   position: absolute;
-  top: 70%;
+  top: 80%;
   left: 50%;
-  width: calc(100% - 96px);
+  width: calc(100% - 50%);
   transform: translate(-50%, -50%);
   background-color: #831616;
   border: 1px solid #a1cb23;

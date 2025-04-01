@@ -17,3 +17,19 @@
   height: 100px;
   width: 400px;
 }
+
+.btnContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 100%;
+}
+
+.counterContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 100%;
+}

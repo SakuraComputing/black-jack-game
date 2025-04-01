@@ -2,26 +2,23 @@
   background: linear-gradient(135deg, #1f2c4b 0%, #0f0b2d 100%);
   border: 1px solid #a1cb23;
   color: white;
-  padding: 15px 40px;
+  width: 120px; /* Fixed width */
+  height: 50px; /* Fixed height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
   text-decoration: none;
   border-radius: 8px;
-  display: inline-block;
   font-size: 16px;
-  margin: 4px 2px;
   cursor: pointer;
   box-sizing: border-box;
   transition: opacity 0.3s ease-in-out;
+  white-space: nowrap; /* Prevents text wrapping */
+  overflow: hidden; /* Hides overflow */
+  text-overflow: ellipsis; /* Optional: Adds "..." if text is too long */
 }
 
 .btn:hover {
   opacity: 0.6;
-}
-
-.btnContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 40px;
-  width: 100%;
 }

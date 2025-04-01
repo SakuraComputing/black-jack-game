@@ -2,13 +2,12 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 
 import { combinations } from './helpers/cardDeck';
-
-import * as styles from '../pages/styles/Main.module.css';
-import * as buttonStyles from '../pages/styles/Button.module.css';
+import { calculateHandValue } from './helpers/utils';
 
 import Hand from '../components/hand/hand';
+import Button from '../components/button/button';
 
-import { calculateHandValue } from './helpers/utils';
+import * as styles from '../pages/styles/Main.module.css';
 
 export default function Home() {
   const [deck, setDeck] = useState(combinations);
@@ -116,9 +115,7 @@ export default function Home() {
       <div className={styles.topContainer}>
         <div className={styles.title}>Black Jack</div>
 
-        <button className={buttonStyles.btn} onClick={dealCards}>
-          Deal
-        </button>
+        <Button text="Reset" onClick={dealCards} />
       </div>
       <div className={styles.container}>
         <div className={styles.handContainer}>
