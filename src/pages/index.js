@@ -8,7 +8,13 @@ import Result from '../components/result/result';
 import Button from '../components/button/button';
 
 import * as styles from '../pages/styles/Main.module.css';
-import { DEALER, PLAYER, DRAW, DEAL_TIMEOUT } from '../helpers/constants';
+import {
+  DEALER,
+  PLAYER,
+  DRAW,
+  DEALER_DEAL_TIMEOUT,
+  PLAYER_DEAL_TIMEOUT,
+} from '../helpers/constants';
 
 export default function Home() {
   const [deck, setDeck] = useState(combinations);
@@ -49,7 +55,7 @@ export default function Home() {
     setTimeout(() => {
       const card = getRandomCardFromDeck();
       setPlayerHand((prevHand) => [...prevHand, card]);
-    }, DEAL_TIMEOUT); // DEAL_TIMEOUT ms = 1 second delay
+    }, PLAYER_DEAL_TIMEOUT); // PLAYER_DEAL_TIMEOUT ms = 1 second delay
   };
 
   // Deal one card to dealer with a delay
@@ -58,7 +64,7 @@ export default function Home() {
     setTimeout(() => {
       const card = getRandomCardFromDeck();
       setDealerHand((prevHand) => [...prevHand, card]);
-    }, DEAL_TIMEOUT); // DEAL_TIMEOUT ms = 1 second delay
+    }, PLAYER_DEAL_TIMEOUT); // PLAYER_DEAL_TIMEOUT ms = 1 second delay
   };
 
   const playerStand = () => {
@@ -66,22 +72,42 @@ export default function Home() {
 
     let updatedDealerHand = [...dealerHand];
     let updatedDealerScore = dealerScore;
+    let dealerIndex = 0;
 
-    while (updatedDealerScore < 17) {
-      const card = getRandomCardFromDeck();
-      updatedDealerHand = [...updatedDealerHand, card];
-      updatedDealerScore = calculateHandValue(updatedDealerHand);
-    }
+    // Recursive function to deal cards to the dealer one by one with delay
+    const dealCardToDealerWithDelay = () => {
+      // Check if the dealer needs another card
+      if (updatedDealerScore < 17 && dealerIndex < 5) {
+        // Adding max 5 cards to prevent infinite loop
+        const card = getRandomCardFromDeck();
+        updatedDealerHand = [...updatedDealerHand, card];
+        updatedDealerScore = calculateHandValue(updatedDealerHand);
 
-    setDealerHand(updatedDealerHand);
+        // Update dealer's hand and score
+        setDealerHand(updatedDealerHand);
 
-    if (updatedDealerScore > 21 || updatedDealerScore < playerScore) {
-      handlePlayerTurnOver({ type: PLAYER, message: 'Player Wins' });
-    } else if (updatedDealerScore === 21 || updatedDealerScore > playerScore) {
-      handlePlayerTurnOver({ type: DEALER, message: 'Dealer Wins' });
-    } else {
-      handlePlayerTurnOver({ type: DRAW, message: "It's a draw!" });
-    }
+        // Increment the dealerIndex to keep track of the number of cards dealt
+        dealerIndex++;
+
+        // Recursively call the function after the delay
+        setTimeout(dealCardToDealerWithDelay, DEALER_DEAL_TIMEOUT); // PLAYER_DEAL_TIMEOUT can be 1000ms (1 second)
+      } else {
+        // Once the dealer's hand is done, check the results
+        if (updatedDealerScore > 21 || updatedDealerScore < playerScore) {
+          handlePlayerTurnOver({ type: PLAYER, message: 'Player Wins' });
+        } else if (
+          updatedDealerScore === 21 ||
+          updatedDealerScore > playerScore
+        ) {
+          handlePlayerTurnOver({ type: DEALER, message: 'Dealer Wins' });
+        } else {
+          handlePlayerTurnOver({ type: DRAW, message: "It's a draw!" });
+        }
+      }
+    };
+
+    // Start the dealer card dealing process
+    dealCardToDealerWithDelay();
   };
 
   const reset = () => {
@@ -110,7 +136,7 @@ export default function Home() {
       setDealerScore(dealerValue);
 
       // After the dealer’s first card, deal the dealer’s second card
-      setTimeout(dealSecondCardToDealer, DEAL_TIMEOUT);
+      setTimeout(dealSecondCardToDealer, PLAYER_DEAL_TIMEOUT);
     };
 
     const dealSecondCardToDealer = () => {
@@ -122,7 +148,7 @@ export default function Home() {
       setDealerScore(dealerValue);
 
       // After the dealer's cards, deal the player's first card
-      setTimeout(dealFirstCardToPlayer, DEAL_TIMEOUT);
+      setTimeout(dealFirstCardToPlayer, PLAYER_DEAL_TIMEOUT);
     };
 
     const dealFirstCardToPlayer = () => {
@@ -134,7 +160,7 @@ export default function Home() {
       setPlayerScore(playerValue);
 
       // After the player’s first card, deal the player’s second card
-      setTimeout(dealSecondCardToPlayer, DEAL_TIMEOUT);
+      setTimeout(dealSecondCardToPlayer, PLAYER_DEAL_TIMEOUT);
     };
 
     const dealSecondCardToPlayer = () => {
