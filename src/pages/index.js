@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 
-import { combinations } from './helpers/cardDeck';
-import { calculateHandValue } from './helpers/utils';
+import { combinations } from '../helpers/cardDeck';
+import { calculateHandValue } from '../helpers/utils';
 
 import Hand from '../components/hand/hand';
 import Result from '../components/result/result';
