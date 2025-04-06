@@ -1,4 +1,6 @@
 import React from 'react';
+
+import { DEALER, PLAYER } from '../../helpers/constants';
 import * as styles from '../../pages/styles/Result.module.css';
 
 const Result = ({ result: { type, message } }) => {
@@ -7,10 +9,10 @@ const Result = ({ result: { type, message } }) => {
   let winnerClassName;
 
   switch (type) {
-    case 'player':
+    case PLAYER:
       winnerClassName = styles.playerWin;
       break;
-    case 'dealer':
+    case DEALER:
       winnerClassName = styles.dealerWin;
       break;
     default:

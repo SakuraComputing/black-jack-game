@@ -9,12 +9,13 @@ import Result from '../components/result/result';
 import Button from '../components/button/button';
 
 import * as styles from '../pages/styles/Main.module.css';
+import { DEALER, PLAYER, DRAW } from '../helpers/constants';
 
 export default function Home() {
   const [deck, setDeck] = useState(combinations);
   const [playerHand, setPlayerHand] = useState([]);
   const [dealerHand, setDealerHand] = useState([]);
-  const [gameOver, setGameOver] = useState(false);
+  const [playerTurnOver, setPlayerTurnOver] = useState(false);
   const [playerScore, setPlayerScore] = useState(0);
   const [dealerScore, setDealerScore] = useState(0);
   const [result, setResult] = useState({ type: '', message: '' });
@@ -35,16 +36,16 @@ export default function Home() {
       setPlayerScore(playerValue);
 
       if (playerValue > 21) {
-        handleGameOver({ type: 'dealer', message: 'Dealer Wins' });
+        handleGameOver({ type: DEALER, message: 'Dealer Wins' });
       } else if (playerValue === 21) {
-        handleGameOver({ type: 'player', message: 'Player Wins' });
+        handleGameOver({ type: PLAYER, message: 'Player Wins' });
       }
     }
   }, [playerHand]);
 
   // Deal Card to Player
   const dealCardToPlayer = () => {
-    if (gameOver) {
+    if (playerTurnOver) {
       return;
     }
 
@@ -53,7 +54,7 @@ export default function Home() {
   };
 
   const playerStand = () => {
-    setGameOver(true);
+    setPlayerTurnOver(true);
 
     let updatedDealerHand = [...dealerHand];
     let updatedDealerScore = dealerScore;
@@ -67,11 +68,11 @@ export default function Home() {
     setDealerHand(updatedDealerHand);
 
     if (updatedDealerScore > 21 || updatedDealerScore < playerScore) {
-      handleGameOver({ type: 'player', message: 'Player Wins' });
+      handleGameOver({ type: PLAYER, message: 'Player Wins' });
     } else if (updatedDealerScore === 21 || updatedDealerScore > playerScore) {
-      handleGameOver({ type: 'dealer', message: 'Dealer Wins' });
+      handleGameOver({ type: DEALER, message: 'Dealer Wins' });
     } else {
-      handleGameOver({ type: 'draw', message: "It's a draw!" });
+      handleGameOver({ type: DRAW, message: "It's a draw!" });
     }
   };
 
@@ -88,7 +89,7 @@ export default function Home() {
     setDeck(combinations);
     setPlayerHand([]);
     setDealerHand([]);
-    setGameOver(false);
+    setPlayerTurnOver(false);
   };
 
   const dealCards = () => {
@@ -105,7 +106,7 @@ export default function Home() {
   };
 
   const handleGameOver = (result) => {
-    setGameOver(true);
+    setPlayerTurnOver(true);
     setResult(result);
   };
 
@@ -113,7 +114,7 @@ export default function Home() {
     <div className={styles.main}>
       <div className={styles.deck} id="deck"></div>
 
-      {gameOver && <Result result={result} />}
+      {playerTurnOver && <Result result={result} />}
       <div className={styles.topContainer}>
         <div className={styles.title}>Black Jack</div>
 
@@ -128,9 +129,10 @@ export default function Home() {
           {dealerHand.length > 0 && (
             <Hand
               hand={dealerHand}
-              participant={'dealer'}
+              participant={DEALER}
               dealCardToDealer={dealCardToDealer}
               count={dealerScore}
+              playersTurnOver={playerTurnOver}
             />
           )}
         </div>
@@ -142,11 +144,11 @@ export default function Home() {
           {playerHand.length > 0 && (
             <Hand
               hand={playerHand}
-              participant={'player'}
+              participant={PLAYER}
               dealCardToPlayer={dealCardToPlayer}
               count={playerScore}
               playerStand={playerStand}
-              gameOver={gameOver}
+              playersTurnOver={playerTurnOver}
             />
           )}
         </div>

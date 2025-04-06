@@ -56,3 +56,21 @@
   transform: scale(1.05); /* Slight zoom on hover */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
 }
+
+.faceDownCard {
+  height: 150px;
+  width: 100px;
+  border-radius: 8px;
+  top: 20%;
+  left: 25%;
+  z-index: 10;
+  margin: 4px;
+  background: linear-gradient(
+    135deg,
+    #950ac8 0%,
+    #1b1065 100%
+  ); /* Gradient from dark blue to green */
+  border: 2px solid #f0f0f0; /* Subtle border around the deck */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Adding shadow for depth */
+  background-size: 200px 200px; /* Scaling the texture */
+}
