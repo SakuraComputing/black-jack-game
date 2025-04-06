@@ -36,9 +36,9 @@ export default function Home() {
       setPlayerScore(playerValue);
 
       if (playerValue > 21) {
-        handleGameOver({ type: DEALER, message: 'Dealer Wins' });
+        handlePlayerTurnOver({ type: DEALER, message: 'Dealer Wins' });
       } else if (playerValue === 21) {
-        handleGameOver({ type: PLAYER, message: 'Player Wins' });
+        handlePlayerTurnOver({ type: PLAYER, message: 'Player Wins' });
       }
     }
   }, [playerHand]);
@@ -68,11 +68,11 @@ export default function Home() {
     setDealerHand(updatedDealerHand);
 
     if (updatedDealerScore > 21 || updatedDealerScore < playerScore) {
-      handleGameOver({ type: PLAYER, message: 'Player Wins' });
+      handlePlayerTurnOver({ type: PLAYER, message: 'Player Wins' });
     } else if (updatedDealerScore === 21 || updatedDealerScore > playerScore) {
-      handleGameOver({ type: DEALER, message: 'Dealer Wins' });
+      handlePlayerTurnOver({ type: DEALER, message: 'Dealer Wins' });
     } else {
-      handleGameOver({ type: DRAW, message: "It's a draw!" });
+      handlePlayerTurnOver({ type: DRAW, message: "It's a draw!" });
     }
   };
 
@@ -105,7 +105,7 @@ export default function Home() {
     setDealerScore(calculateHandValue(dealerCards));
   };
 
-  const handleGameOver = (result) => {
+  const handlePlayerTurnOver = (result) => {
     setPlayerTurnOver(true);
     setResult(result);
   };
