@@ -32,7 +32,7 @@ const Hand = ({
           />
         ))}
       </div>
-      {playersTurnOver && (
+      {(isPlayersHand || playersTurnOver) && (
         <div className={styles.counterContainer}>
           <Counter count={count} />
         </div>
