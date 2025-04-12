@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Card from '../card/Card';
 import Counter from '../counter/counter';
@@ -17,20 +17,38 @@ const Hand = ({
 }) => {
   const isPlayersHand = participant === PLAYER;
   const isDealersHand = participant === DEALER;
+  const [hasFlipped, setHasFlipped] = useState(false);
+
+  useEffect(() => {
+    if (isDealersHand && playersTurnOver && !hasFlipped) {
+      setHasFlipped(true);
+    }
+  }, [isDealersHand, hasFlipped, playersTurnOver]);
 
   return (
     <>
       <div className={styles.cardContainer}>
-        {hand.map((card, index) => (
-          <Card
-            key={index}
-            rank={card.rank}
-            suit={card.suit}
-            isDisplayFaceDown={
-              isDealersHand && index === 1 && playersTurnOver === false
-            }
-          />
-        ))}
+        {hand.map((card, index) => {
+          const isDealerSecondCard = isDealersHand && index === 1;
+          const shouldFlip = isDealerSecondCard && hasFlipped;
+          const isFaceDown = isDealerSecondCard && !playersTurnOver;
+
+          return (
+            <div
+              key={index}
+              className={`${styles.cardWrapper} ${
+                shouldFlip ? styles.flipped : ''
+              }`}
+            >
+              <Card
+                key={index}
+                rank={card.rank}
+                suit={card.suit}
+                isFaceDown={isFaceDown}
+              />
+            </div>
+          );
+        })}
       </div>
       {(isPlayersHand || playersTurnOver) && (
         <div className={styles.counterContainer}>

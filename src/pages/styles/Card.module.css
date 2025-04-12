@@ -7,14 +7,42 @@
   width: 100px;
   border: 1px solid black;
   border-radius: 8px;
-  margin: 4px;
-  background: linear-gradient(
-    135deg,
-    #eff1f4 0%,
-    #e0e0ea 100%
-  ); /* Gradient from dark blue to green */
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+}
 
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); /* Adding shadow for depth */
+.faceUpCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  border: 1px solid black;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #eff1f4 0%, #e0e0ea 100%);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  position: absolute;
+  backface-visibility: hidden;
+  transform: rotateY(180deg);
+}
+
+.faceDownCard {
+  height: 100%;
+  width: 100%;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #950ac8 0%, #1b1065 100%);
+  border: 2px solid #f0f0f0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  background-size: 200px 200px;
+  position: absolute;
+  backface-visibility: hidden;
+  transform: rotateY(0deg);
+}
+
+.card.flipped {
+  transform: rotateY(180deg);
 }
 
 .rank {
@@ -24,53 +52,4 @@
 
 .suit {
   font-size: 25px;
-}
-
-/* Define keyframes for card flying animation */
-@keyframes dealCard {
-  0% {
-    transform: scale(0.5) translate(0, 0);
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1) translate(50px, -200px); /* Flying towards the hands */
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1) translate(0, 0);
-  }
-}
-
-/* Dealer hand animation */
-#dealerHand .card {
-  animation-delay: 0.5s; /* Dealer gets cards later */
-}
-
-/* Player hand animation */
-#playerHand .card {
-  animation-delay: 1s; /* Player gets cards last */
-}
-
-.card:hover {
-  transform: scale(1.05); /* Slight zoom on hover */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
-}
-
-.faceDownCard {
-  height: 150px;
-  width: 100px;
-  border-radius: 8px;
-  top: 20%;
-  left: 25%;
-  z-index: 10;
-  margin: 4px;
-  background: linear-gradient(
-    135deg,
-    #950ac8 0%,
-    #1b1065 100%
-  ); /* Gradient from dark blue to green */
-  border: 2px solid #f0f0f0; /* Subtle border around the deck */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Adding shadow for depth */
-  background-size: 200px 200px; /* Scaling the texture */
 }

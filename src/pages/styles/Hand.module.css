@@ -10,6 +10,13 @@
   height: 180px;
 }
 
+.cardWrapper {
+  perspective: 1000px;
+  height: 150px;
+  width: 100px;
+  margin: 4px;
+}
+
 .playerContainer {
   display: flex;
   justify-content: space-around;
