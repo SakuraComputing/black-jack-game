@@ -1,3 +1,5 @@
+import { PLAYER, DEALER, DRAW } from './constants';
+
 export const calculateHandValue = (hand) => {
   if (!hand) {
     throw new Error('calculateHandValue() requires a non-null hand');
@@ -41,4 +43,43 @@ export const getRandomCardFromDeck = (deck, setDeck) => {
   setDeck(newDeck);
 
   return randomCard;
+};
+
+export const dealCardToDealerWithDelay = ({
+  dealerHand,
+  dealerScore,
+  playerScore,
+  getRandomCard,
+  setDealerHand,
+  calculateHandValue,
+  handlePlayerTurnOver,
+  timeout = 1000,
+}) => {
+  let updatedDealerHand = [...dealerHand];
+  let updatedDealerScore = dealerScore;
+  let dealerIndex = 0;
+
+  const deal = () => {
+    if (updatedDealerScore < 17 && dealerIndex < 5) {
+      const card = getRandomCard();
+      updatedDealerHand.push(card);
+      updatedDealerScore = calculateHandValue(updatedDealerHand);
+      setDealerHand([...updatedDealerHand]);
+      dealerIndex++;
+      setTimeout(deal, timeout);
+    } else {
+      if (updatedDealerScore > 21 || updatedDealerScore < playerScore) {
+        handlePlayerTurnOver({ type: PLAYER, message: 'Player Wins' });
+      } else if (
+        updatedDealerScore === 21 ||
+        updatedDealerScore > playerScore
+      ) {
+        handlePlayerTurnOver({ type: DEALER, message: 'Dealer Wins' });
+      } else {
+        handlePlayerTurnOver({ type: DRAW, message: "It's a draw!" });
+      }
+    }
+  };
+
+  deal();
 };

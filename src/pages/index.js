@@ -1,7 +1,11 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { combinations } from '../helpers/cardDeck';
-import { calculateHandValue, getRandomCardFromDeck } from '../helpers/utils';
+import {
+  calculateHandValue,
+  getRandomCardFromDeck,
+  dealCardToDealerWithDelay,
+} from '../helpers/utils';
 
 import Hand from '../components/hand/hand';
 import Result from '../components/result/result';
@@ -11,7 +15,6 @@ import * as styles from '../pages/styles/Main.module.css';
 import {
   DEALER,
   PLAYER,
-  DRAW,
   DEALER_DEAL_TIMEOUT,
   PLAYER_DEAL_TIMEOUT,
   CARD_FLIP_DURATION,
@@ -46,60 +49,31 @@ export default function Home() {
     setTimeout(() => {
       const card = getRandomCardFromDeck(deck, setDeck);
       setPlayerHand((prevHand) => [...prevHand, card]);
-    }, PLAYER_DEAL_TIMEOUT); // PLAYER_DEAL_TIMEOUT ms = 1 second delay
+    }, PLAYER_DEAL_TIMEOUT);
   };
 
   // Deal one card to dealer with a delay
   const dealCardToDealer = () => {
-    // Add delay before dealing the card to dealer
     setTimeout(() => {
       const card = getRandomCardFromDeck(deck, setDeck);
       setDealerHand((prevHand) => [...prevHand, card]);
-    }, PLAYER_DEAL_TIMEOUT); // PLAYER_DEAL_TIMEOUT ms = 1 second delay
+    }, PLAYER_DEAL_TIMEOUT);
   };
 
   const playerStand = () => {
     setPlayerTurnOver(true);
 
     setTimeout(() => {
-      let updatedDealerHand = [...dealerHand];
-      let updatedDealerScore = dealerScore;
-      let dealerIndex = 0;
-
-      // Recursive function to deal cards to the dealer one by one with delay
-      const dealCardToDealerWithDelay = () => {
-        // Check if the dealer needs another card
-        if (updatedDealerScore < 17 && dealerIndex < 5) {
-          // Adding max 5 cards to prevent infinite loop
-          const card = getRandomCardFromDeck(deck, setDeck);
-          updatedDealerHand = [...updatedDealerHand, card];
-          updatedDealerScore = calculateHandValue(updatedDealerHand);
-
-          // Update dealer's hand and score
-          setDealerHand(updatedDealerHand);
-
-          // Increment the dealerIndex to keep track of the number of cards dealt
-          dealerIndex++;
-
-          // Recursively call the function after the delay
-          setTimeout(dealCardToDealerWithDelay, DEALER_DEAL_TIMEOUT); // PLAYER_DEAL_TIMEOUT can be 1000ms (1 second)
-        } else {
-          // Once the dealer's hand is done, check the results
-          if (updatedDealerScore > 21 || updatedDealerScore < playerScore) {
-            handlePlayerTurnOver({ type: PLAYER, message: 'Player Wins' });
-          } else if (
-            updatedDealerScore === 21 ||
-            updatedDealerScore > playerScore
-          ) {
-            handlePlayerTurnOver({ type: DEALER, message: 'Dealer Wins' });
-          } else {
-            handlePlayerTurnOver({ type: DRAW, message: "It's a draw!" });
-          }
-        }
-      };
-
-      // Start the dealer card dealing process
-      dealCardToDealerWithDelay();
+      dealCardToDealerWithDelay({
+        dealerHand,
+        dealerScore,
+        playerScore,
+        getRandomCard: () => getRandomCardFromDeck(deck, setDeck),
+        setDealerHand,
+        calculateHandValue,
+        handlePlayerTurnOver,
+        timeout: DEALER_DEAL_TIMEOUT,
+      });
     }, CARD_FLIP_DURATION);
   };
 
