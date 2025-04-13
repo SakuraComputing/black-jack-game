@@ -51,6 +51,7 @@ export const dealCardToDealerWithDelay = ({
   playerScore,
   getRandomCard,
   setDealerHand,
+  setDealerScore,
   calculateHandValue,
   handlePlayerTurnOver,
   timeout = 1000,
@@ -65,6 +66,7 @@ export const dealCardToDealerWithDelay = ({
       updatedDealerHand.push(card);
       updatedDealerScore = calculateHandValue(updatedDealerHand);
       setDealerHand([...updatedDealerHand]);
+      setDealerScore(updatedDealerScore);
       dealerIndex++;
       setTimeout(deal, timeout);
     } else {

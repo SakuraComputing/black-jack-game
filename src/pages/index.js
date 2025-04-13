@@ -71,6 +71,7 @@ export default function Home() {
         playerScore,
         getRandomCard: () => getRandomCardFromDeck(deck, setDeck),
         setDealerHand,
+        setDealerScore,
         calculateHandValue,
         handlePlayerTurnOver,
         timeout: DEALER_DEAL_TIMEOUT,
