@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { combinations } from '../helpers/cardDeck';
-import { calculateHandValue } from '../helpers/utils';
+import { calculateHandValue, getRandomCardFromDeck } from '../helpers/utils';
 
 import Hand from '../components/hand/hand';
 import Result from '../components/result/result';
@@ -26,16 +26,6 @@ export default function Home() {
   const [dealerScore, setDealerScore] = useState(0);
   const [result, setResult] = useState({ type: '', message: '' });
 
-  const getRandomCardFromDeck = () => {
-    const randomIndex = Math.floor(Math.random() * deck.length);
-    const randomCard = deck[randomIndex];
-
-    const newDeck = deck.filter((card, index) => index !== randomIndex);
-    setDeck(newDeck);
-
-    return randomCard;
-  };
-
   useEffect(() => {
     if (playerHand.length > 0) {
       const playerValue = calculateHandValue(playerHand);
@@ -54,7 +44,7 @@ export default function Home() {
 
     // Add delay before dealing the card to player
     setTimeout(() => {
-      const card = getRandomCardFromDeck();
+      const card = getRandomCardFromDeck(deck, setDeck);
       setPlayerHand((prevHand) => [...prevHand, card]);
     }, PLAYER_DEAL_TIMEOUT); // PLAYER_DEAL_TIMEOUT ms = 1 second delay
   };
@@ -63,7 +53,7 @@ export default function Home() {
   const dealCardToDealer = () => {
     // Add delay before dealing the card to dealer
     setTimeout(() => {
-      const card = getRandomCardFromDeck();
+      const card = getRandomCardFromDeck(deck, setDeck);
       setDealerHand((prevHand) => [...prevHand, card]);
     }, PLAYER_DEAL_TIMEOUT); // PLAYER_DEAL_TIMEOUT ms = 1 second delay
   };
@@ -81,7 +71,7 @@ export default function Home() {
         // Check if the dealer needs another card
         if (updatedDealerScore < 17 && dealerIndex < 5) {
           // Adding max 5 cards to prevent infinite loop
-          const card = getRandomCardFromDeck();
+          const card = getRandomCardFromDeck(deck, setDeck);
           updatedDealerHand = [...updatedDealerHand, card];
           updatedDealerScore = calculateHandValue(updatedDealerHand);
 
@@ -131,7 +121,7 @@ export default function Home() {
 
     // Deal cards to the dealer first, with a delay
     const dealFirstCardToDealer = () => {
-      const dealerCard = getRandomCardFromDeck();
+      const dealerCard = getRandomCardFromDeck(deck, setDeck);
       dealerCards.push(dealerCard);
       setDealerHand([...dealerCards]);
 
@@ -143,7 +133,7 @@ export default function Home() {
     };
 
     const dealSecondCardToDealer = () => {
-      const dealerCard = getRandomCardFromDeck();
+      const dealerCard = getRandomCardFromDeck(deck, setDeck);
       dealerCards.push(dealerCard);
       setDealerHand([...dealerCards]);
 
@@ -155,7 +145,7 @@ export default function Home() {
     };
 
     const dealFirstCardToPlayer = () => {
-      const playerCard = getRandomCardFromDeck();
+      const playerCard = getRandomCardFromDeck(deck, setDeck);
       playerCards.push(playerCard);
       setPlayerHand([...playerCards]);
 
@@ -167,7 +157,7 @@ export default function Home() {
     };
 
     const dealSecondCardToPlayer = () => {
-      const playerCard = getRandomCardFromDeck();
+      const playerCard = getRandomCardFromDeck(deck, setDeck);
       playerCards.push(playerCard);
       setPlayerHand([...playerCards]);
 

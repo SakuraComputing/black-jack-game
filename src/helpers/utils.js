@@ -32,3 +32,13 @@ export const calculateHandValue = (hand) => {
 
   return totalValue;
 };
+
+export const getRandomCardFromDeck = (deck, setDeck) => {
+  const randomIndex = Math.floor(Math.random() * deck.length);
+  const randomCard = deck[randomIndex];
+
+  const newDeck = deck.filter((card, index) => index !== randomIndex);
+  setDeck(newDeck);
+
+  return randomCard;
+};
