@@ -83,3 +83,69 @@ export const dealCardToDealerWithDelay = ({
 
   deal();
 };
+
+export const dealInitialCards = ({
+  setPlayerHand,
+  setDealerHand,
+  setPlayerScore,
+  setDealerScore,
+  setDeck,
+  combinations,
+  getRandomCard,
+  PLAYER_DEAL_TIMEOUT,
+}) => {
+  // Reset state before dealing
+  setDeck(combinations);
+  setPlayerHand([]);
+  setDealerHand([]);
+  setPlayerScore(0);
+  setDealerScore(0);
+
+  let playerCards = [];
+  let dealerCards = [];
+
+  const dealFirstCardToDealer = () => {
+    const dealerCard = getRandomCard();
+    dealerCards.push(dealerCard);
+    setDealerHand([...dealerCards]);
+
+    const dealerValue = calculateHandValue(dealerCards);
+    setDealerScore(dealerValue);
+
+    setTimeout(dealSecondCardToDealer, PLAYER_DEAL_TIMEOUT);
+  };
+
+  const dealSecondCardToDealer = () => {
+    const dealerCard = getRandomCard();
+    dealerCards.push(dealerCard);
+    setDealerHand([...dealerCards]);
+
+    const dealerValue = calculateHandValue(dealerCards);
+    setDealerScore(dealerValue);
+
+    setTimeout(dealFirstCardToPlayer, PLAYER_DEAL_TIMEOUT);
+  };
+
+  const dealFirstCardToPlayer = () => {
+    const playerCard = getRandomCard();
+    playerCards.push(playerCard);
+    setPlayerHand([...playerCards]);
+
+    const playerValue = calculateHandValue(playerCards);
+    setPlayerScore(playerValue);
+
+    setTimeout(dealSecondCardToPlayer, PLAYER_DEAL_TIMEOUT);
+  };
+
+  const dealSecondCardToPlayer = () => {
+    const playerCard = getRandomCard();
+    playerCards.push(playerCard);
+    setPlayerHand([...playerCards]);
+
+    const playerValue = calculateHandValue(playerCards);
+    setPlayerScore(playerValue);
+  };
+
+  // Start the sequence
+  dealFirstCardToDealer();
+};

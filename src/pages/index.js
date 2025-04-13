@@ -5,6 +5,7 @@ import {
   calculateHandValue,
   getRandomCardFromDeck,
   dealCardToDealerWithDelay,
+  dealInitialCards,
 } from '../helpers/utils';
 
 import Hand from '../components/hand/hand';
@@ -88,59 +89,18 @@ export default function Home() {
   };
 
   const dealCards = () => {
-    reset();
+    reset(); // optional if you keep the `reset` logic, otherwise move it into the helper
 
-    let playerCards = [];
-    let dealerCards = [];
-
-    // Deal cards to the dealer first, with a delay
-    const dealFirstCardToDealer = () => {
-      const dealerCard = getRandomCardFromDeck(deck, setDeck);
-      dealerCards.push(dealerCard);
-      setDealerHand([...dealerCards]);
-
-      const dealerValue = calculateHandValue(dealerCards);
-      setDealerScore(dealerValue);
-
-      // After the dealer’s first card, deal the dealer’s second card
-      setTimeout(dealSecondCardToDealer, PLAYER_DEAL_TIMEOUT);
-    };
-
-    const dealSecondCardToDealer = () => {
-      const dealerCard = getRandomCardFromDeck(deck, setDeck);
-      dealerCards.push(dealerCard);
-      setDealerHand([...dealerCards]);
-
-      const dealerValue = calculateHandValue(dealerCards);
-      setDealerScore(dealerValue);
-
-      // After the dealer's cards, deal the player's first card
-      setTimeout(dealFirstCardToPlayer, PLAYER_DEAL_TIMEOUT);
-    };
-
-    const dealFirstCardToPlayer = () => {
-      const playerCard = getRandomCardFromDeck(deck, setDeck);
-      playerCards.push(playerCard);
-      setPlayerHand([...playerCards]);
-
-      const playerValue = calculateHandValue(playerCards);
-      setPlayerScore(playerValue);
-
-      // After the player’s first card, deal the player’s second card
-      setTimeout(dealSecondCardToPlayer, PLAYER_DEAL_TIMEOUT);
-    };
-
-    const dealSecondCardToPlayer = () => {
-      const playerCard = getRandomCardFromDeck(deck, setDeck);
-      playerCards.push(playerCard);
-      setPlayerHand([...playerCards]);
-
-      const playerValue = calculateHandValue(playerCards);
-      setPlayerScore(playerValue);
-    };
-
-    // Start dealing cards, starting with the dealer
-    dealFirstCardToDealer();
+    dealInitialCards({
+      setPlayerHand,
+      setDealerHand,
+      setPlayerScore,
+      setDealerScore,
+      setDeck,
+      combinations,
+      getRandomCard: () => getRandomCardFromDeck(deck, setDeck),
+      PLAYER_DEAL_TIMEOUT,
+    });
   };
 
   const handlePlayerTurnOver = (result) => {
